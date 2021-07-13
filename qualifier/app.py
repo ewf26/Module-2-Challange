@@ -114,15 +114,17 @@ def save_qualifying_loans(qualifying_loans):
     # YOUR CODE HERE
     
     
-    header = ["Lender", "Max Loan Amount", "Max LTV", "Max DTI", "Min Credit Score", "Interest Rate"]
-    output_path = Path("qualifying_loans.csv")
-    csvpath = output_path
-    with open(csvpath, 'w', newline='') as csvfile:
-        csvwriter = csv.writer(csvfile)
-        csvwriter.writerow(header)
-        for row in qualifying_loans:
-            csvwriter.writerow(row)
-
+    if questionary.confirm("Would you like to save your qualifying loans?").ask() == True:
+        csvpath = questionary.text("Enter the output file path to save your loans.").ask()
+        csvpath = Path(csvpath) 
+        if not csvpath.exists():
+            sys.exit(f"Oops! Can't find this path: {csvpath}")
+        header = ["Lender", "Max Loan Amount", "Max LTV", "Max DTI", "Min Credit Score", "Interest Rate"]
+        with open(csvpath, 'w', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow(header)
+            for row in qualifying_loans:
+                csvwriter.writerow(row)
 def run():
     """The main function for running the script."""
 
