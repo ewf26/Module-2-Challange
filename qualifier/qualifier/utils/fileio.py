@@ -28,3 +28,24 @@ def load_csv(csvpath):
         for row in csvreader:
             data.append(row)
     return data
+
+
+
+def save_csv(csvpath):
+    """ Saves a CSV file to path provided
+    
+    Args:
+        csvpath (Path): The csv file path.
+   """
+   with save(csvpath) as csvfile:
+       data = []
+       csvreader = csv.reader(csvfile, delimiter=",")
+
+        # Skip the CSV Header
+        next(csvreader)
+
+        # Read the CSV data
+        for row in csvreader:
+            data.append(row)
+    return data
+   
